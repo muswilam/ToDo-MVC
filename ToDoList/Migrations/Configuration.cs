@@ -33,7 +33,7 @@ namespace ToDoList.Migrations
         }
         void AddUsers (ToDoList.Models.ApplicationDbContext context)
         {
-            var user = new ApplicationUser { UserName = "user1@gamil.com" };
+            var user = new ApplicationUser { UserName = "user1@gmail.com" };
             var um = new UserManager<ApplicationUser>(
                      new UserStore<ApplicationUser>(context));
             um.Create(user, "password");
