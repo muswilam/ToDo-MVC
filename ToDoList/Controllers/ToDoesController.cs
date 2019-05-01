@@ -24,6 +24,13 @@ namespace ToDoList.Controllers
             return View(todosCurrentUser);
         }
 
+        public ActionResult BuildTodoTable()
+        {
+            string currentUserId = User.Identity.GetUserId();
+            ApplicationUser currentUser = db.Users.FirstOrDefault(u => u.Id == currentUserId);
+            IEnumerable<ToDo> todosCurrentUser = db.ToDos.ToList().Where(u => u.User == currentUser);
+            return PartialView("_TodoTable", todosCurrentUser);
+        }
         // GET: ToDoes/Details/5
         public ActionResult Details(int? id)
         {
