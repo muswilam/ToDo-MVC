@@ -74,6 +74,7 @@ namespace ToDoList.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
+        //[OutputCache(Location = OutputCacheLocation.None , NoStore = true)]
         public ActionResult AjaxCreate([Bind(Include = "ID,Description")] ToDo toDo)
         {
             if (ModelState.IsValid)
@@ -89,6 +90,27 @@ namespace ToDoList.Controllers
             return PartialView("_TodoTable", getMyTodos());
         }
 
+        [HttpPost]
+        public ActionResult AjaxEdit(int? id , bool value)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            ToDo toDo = db.ToDos.Find(id);
+            if (toDo == null)
+            {
+                return HttpNotFound();
+            }
+            else
+            {
+                toDo.IsDone = value;
+                db.Entry(toDo).State = EntityState.Modified;
+                db.SaveChanges();
+                return PartialView("_TodoTable", getMyTodos());
+            }
+        }
+        
         // GET: ToDoes/Edit/5
         public ActionResult Edit(int? id)
         {

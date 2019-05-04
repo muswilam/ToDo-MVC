@@ -1,31 +1,27 @@
 ﻿@model IEnumerable<ToDoList.Models.ToDo>
 
 <table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.Description)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.IsDone)
-        </th>
-        <th></th>
-    </tr>
 
     @foreach (var item in Model)
     {
         <tr>
             <td>
-                @Html.DisplayFor(modelItem => item.Description)
+                <h4>
+                    @Html.CheckBoxFor(modelItem => item.IsDone, new { id = item.ID, @class = "ActiveCheck" })
+                    @Html.DisplayFor(modelItem => item.Description)
+                </h4>
             </td>
+
             <td>
-                @Html.DisplayFor(modelItem => item.IsDone)
-            </td>
-            <td>
-                @Html.ActionLink("Edit", "Edit", new { id = item.ID }) |
-                @Html.ActionLink("Delete", "Delete", new { id = item.ID })
+                <h4>
+                    @Html.ActionLink("Edit", "Edit", new { id = item.ID }) |
+                    @Html.ActionLink("Delete", "Delete", new { id = item.ID })
+                </h4>
             </td>
         </tr>
     }
 
 </table>
+
+<script src="~/Custom_Scripts/Checkbox_Event_Listener.js"></script>
 
