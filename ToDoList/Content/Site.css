@@ -22,3 +22,9 @@ select,
 textarea {
     max-width: 280px;
 }
+
+/*cross line on items that are completed*/
+.completed
+{
+    text-decoration: line-through;
+}

@@ -6,18 +6,24 @@
     {
         <tr>
             <td>
-                <h4>
-                    @Html.CheckBoxFor(modelItem => item.IsDone, new { id = item.ID, @class = "ActiveCheck" })
-                    @Html.DisplayFor(modelItem => item.Description)
-                </h4>
+                @if (!item.IsDone)
+                {
+                    <h4>
+                        @Html.CheckBoxFor(modelItem => item.IsDone, new { id = item.ID, @class = "ActiveCheck" })
+                        @Html.DisplayFor(modelItem => item.Description)
+                    </h4>
+                }
+                else
+                {
+                    <div class="completed">
+                        <h4>
+                            @Html.CheckBoxFor(modelItem => item.IsDone, new { id = item.ID, @class = "ActiveCheck" })
+                            @Html.DisplayFor(modelItem => item.Description)
+                        </h4>
+                    </div>
+                }
             </td>
 
-            <td>
-                <h4>
-                    @Html.ActionLink("Edit", "Edit", new { id = item.ID }) |
-                    @Html.ActionLink("Delete", "Delete", new { id = item.ID })
-                </h4>
-            </td>
         </tr>
     }
 

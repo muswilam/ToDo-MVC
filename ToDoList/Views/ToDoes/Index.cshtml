@@ -6,24 +6,24 @@
 
 <h2>My To-Dos</h2>
 
-<div id="tableDiv"></div>
-<div id="todoCreateForm">
-    @using (Ajax.BeginForm("AjaxCreate", "ToDoes", new AjaxOptions
+    <div id="tableDiv"></div>
+    <div id="todoCreateForm">
+        @using (Ajax.BeginForm("AjaxCreate", "ToDoes", new AjaxOptions
     {
         InsertionMode = InsertionMode.Replace,
         HttpMethod = "Post",
         UpdateTargetId = "tableDiv"
     }))
-    {
-        <div class="form-group">
-            @Html.AntiForgeryToken()
-            <div class="col-md-push-10" >
-                @Html.EditorFor(model => model.Description, new { htmlAttributes = new { @class = "form-control", id = "textInput" } })
-                @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger" })
+        {
+            <div class="form-group">
+                @Html.AntiForgeryToken()
+                <div class="col-md-push-10">
+                    @Html.EditorFor(model => model.Description, new { htmlAttributes = new { @class = "form-control", id = "textInput" } })
+                    @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger" })
+                </div>
             </div>
-        </div>
-    }
-</div>
+        }
+    </div>
 
 @section Scripts {
     <script src="~/Custom_Scripts/BuildTable.js"></script>
