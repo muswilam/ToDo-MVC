@@ -24,7 +24,17 @@ namespace ToDoList.Controllers
         {
             string currentUserId = User.Identity.GetUserId();
             ApplicationUser currentUser = db.Users.FirstOrDefault(u => u.Id == currentUserId);
-            return db.ToDos.ToList().Where(u => u.User == currentUser);
+            IEnumerable<ToDo> myTodos = db.ToDos.ToList().Where(u => u.User == currentUser);
+
+            int completedTodo = 0;
+            foreach(ToDo todo in myTodos)
+            {
+                if (todo.IsDone)
+                    completedTodo++;
+            }
+
+            ViewBag.percent =Math.Round((100f *(float) completedTodo) /(float) myTodos.Count());
+            return myTodos;
         }
 
         public ActionResult BuildTodoTable()
@@ -38,7 +48,7 @@ namespace ToDoList.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            ToDo toDo = db.ToDos.Find(id);
+            ToDo toDo = db.ToDos.Find(id); 
             if (toDo == null)
             {
                 return HttpNotFound();
@@ -158,13 +168,19 @@ namespace ToDoList.Controllers
         }
 
         // POST: ToDoes/Delete/5
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(int id)
+
+        [HttpPost]
+        public ActionResult Delete(int id)
         {
+            string currentUserId = User.Identity.GetUserId();
+            ApplicationUser currentUser = db.Users.FirstOrDefault(u => u.Id == currentUserId);
             ToDo toDo = db.ToDos.Find(id);
-            db.ToDos.Remove(toDo);
-            db.SaveChanges();
+            if (toDo.User == currentUser)
+            {
+                db.ToDos.Remove(toDo);
+                db.SaveChanges();
+
+            }
             return RedirectToAction("Index");
         }
 
