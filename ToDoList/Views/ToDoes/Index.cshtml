@@ -6,21 +6,27 @@
 
 <h2>My To-Dos</h2>
 
+<script type="text/javascript" language="javascript">
+    function ClearText() {
+        $('#textInput').val('');
+    }
+</script>
+
     <div id="tableDiv"></div>
     <div id="todoCreateForm">
         @using (Ajax.BeginForm("AjaxCreate", "ToDoes", new AjaxOptions
     {
         InsertionMode = InsertionMode.Replace,
         HttpMethod = "Post",
-        UpdateTargetId = "tableDiv"
+        UpdateTargetId = "tableDiv",
+        OnSuccess = "ClearText"
     }))
         {
-            <div class="form-group">
+            <div class="form-group" id="divText">
                 @Html.AntiForgeryToken()
                 <div class="col-md-push-10">
                     @Html.EditorFor(model => model.Description, new { htmlAttributes = new { @class = "form-control", id = "textInput" } })
-                    @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger" })
-                </div>
+                    @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger" })</div>
             </div>
         }
     </div>
